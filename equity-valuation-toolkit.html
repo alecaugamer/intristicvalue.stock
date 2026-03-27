@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Equity Valuation Toolkit — Portfolio Project</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0e0f11;
+    --bg2: #16181c;
+    --bg3: #1e2128;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8eaed;
+    --text2: #9aa0ab;
+    --text3: #5c6370;
+    --accent: #6ee7b7;
+    --accent2: #3b82f6;
+    --accent3: #a78bfa;
+    --accent4: #f59e0b;
+    --red: #f87171;
+    --green: #6ee7b7;
+    --blue: #93c5fd;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    background: rgba(14,15,17,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.04em; }
+  .logo span { color: var(--text2); }
+  nav { display: flex; gap: 4px; }
+  nav button {
+    background: none; border: none; color: var(--text2); font-size: 13px;
+    font-family: 'DM Mono', monospace; padding: 6px 12px; cursor: pointer;
+    border-radius: var(--radius); transition: all 0.15s;
+  }
+  nav button:hover { color: var(--text); background: var(--bg3); }
+  nav button.active { color: var(--accent); background: rgba(110,231,183,0.08); }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); display: block; }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; line-height: 1.15;
+    letter-spacing: -0.02em; margin-bottom: 1.5rem;
+  }
+  h1 strong { font-weight: 500; color: var(--accent); }
+  .hero-desc { color: var(--text2); font-size: 16px; max-width: 580px; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .meta-item { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
+  .meta-item span { color: var(--text2); margin-left: 6px; }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    max-width: 860px; margin: 0 auto 3rem; padding: 0 2rem;
+  }
+  .disclaimer-box {
+    border: 1px solid rgba(248,113,113,0.2);
+    background: rgba(248,113,113,0.04);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .disc-icon { font-size: 16px; margin-top: 2px; flex-shrink: 0; }
+  .disc-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .disc-text strong { color: var(--red); font-weight: 500; }
+
+  /* README */
+  .readme {
+    max-width: 860px; margin: 0 auto 3rem; padding: 0 2rem;
+  }
+  .readme-box {
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .readme-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3);
+  }
+  .readme-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .readme-body { padding: 1.5rem 1.5rem; }
+  .readme-body h2 { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; margin-top: 1.25rem; }
+  .readme-body h2:first-child { margin-top: 0; }
+  .readme-body p { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 0.5rem; }
+  .readme-body ul { padding-left: 1.2rem; }
+  .readme-body li { font-size: 13px; color: var(--text2); line-height: 1.8; }
+  .readme-body code { font-family: 'DM Mono', monospace; font-size: 12px; background: var(--bg3); padding: 2px 6px; border-radius: 4px; color: var(--accent); }
+  .readme-body .method-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 0.75rem; }
+  .method-card { background: var(--bg3); border-radius: var(--radius); padding: 0.75rem 1rem; border: 1px solid var(--border); }
+  .method-card .mc-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+  .method-card .mc-name { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 2px; }
+  .method-card .mc-desc { font-size: 11px; color: var(--text3); line-height: 1.5; }
+
+  /* TABS CONTENT */
+  .tab-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .section-header { margin-bottom: 1.5rem; }
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .section-title { font-size: 22px; font-weight: 400; letter-spacing: -0.01em; }
+  .section-title strong { color: var(--accent); font-weight: 500; }
+
+  /* CARD */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-title { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+
+  /* INPUTS */
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; color: var(--text2); font-family: 'DM Mono', monospace; }
+  .field input, .field select {
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius);
+    color: var(--text); font-size: 14px; padding: 8px 11px;
+    font-family: 'DM Mono', monospace; width: 100%;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+  .field input.prefilled { border-color: rgba(110,231,183,0.3); }
+  .field input.suggested { border-color: var(--accent2); background: rgba(59,130,246,0.08); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .hist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--accent); color: #0e0f11; border: none;
+    padding: 10px 28px; border-radius: var(--radius); font-size: 14px;
+    font-weight: 500; cursor: pointer; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-sm {
+    background: none; border: 1px solid var(--border2); color: var(--text2);
+    padding: 5px 12px; border-radius: var(--radius); font-size: 12px;
+    cursor: pointer; font-family: 'DM Mono', monospace; transition: all 0.15s;
+  }
+  .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-suggest { border-color: rgba(59,130,246,0.4); color: var(--accent2); }
+  .btn-suggest:hover { border-color: var(--accent2); background: rgba(59,130,246,0.08); }
+
+  /* RESULTS */
+  .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+  .mcard { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+  .mcard.accent { border-color: var(--accent); }
+  .mcard .ml { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .mcard .mv { font-size: 22px; font-weight: 400; font-family: 'DM Mono', monospace; color: var(--text); }
+  .mcard .ms { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* SENS TABLE */
+  .sens-table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: 'DM Mono', monospace; }
+  .sens-table th, .sens-table td { padding: 6px 10px; text-align: center; border: 1px solid var(--border); }
+  .sens-table th { color: var(--text3); font-weight: 400; background: var(--bg3); }
+  .sc-low { background: rgba(248,113,113,0.12); color: #f87171; }
+  .sc-mid { background: rgba(110,231,183,0.08); color: #6ee7b7; }
+  .sc-high { background: rgba(147,197,253,0.1); color: #93c5fd; }
+
+  /* PHASE TABLE */
+  .phase-table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: 'DM Mono', monospace; }
+  .phase-table th, .phase-table td { padding: 6px 10px; text-align: right; border: 1px solid var(--border); }
+  .phase-table th { color: var(--text3); font-weight: 400; background: var(--bg3); text-align: right; }
+  .phase-table td:first-child, .phase-table th:first-child { text-align: left; }
+
+  /* PEER CARDS */
+  .peer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .peer-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; }
+  .peer-card.highlight { border-color: var(--accent); }
+  .peer-name { font-size: 14px; font-weight: 500; font-family: 'DM Mono', monospace; color: var(--accent); margin-bottom: 8px; }
+  .peer-name span { color: var(--text2); font-size: 11px; font-weight: 400; }
+  .peer-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+  .peer-label { color: var(--text3); }
+  .peer-val { color: var(--text); }
+  .bar-wrap { height: 3px; background: var(--bg); border-radius: 2px; overflow: hidden; margin: 6px 0; }
+  .bar-fill { height: 100%; border-radius: 2px; }
+
+  /* TAGS */
+  .tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-family: 'DM Mono', monospace; margin-left: 4px; }
+  .tag-under { background: rgba(110,231,183,0.12); color: var(--green); }
+  .tag-over { background: rgba(248,113,113,0.12); color: var(--red); }
+  .tag-fair { background: rgba(147,197,253,0.12); color: var(--blue); }
+  .peg-good { background: rgba(110,231,183,0.12); color: var(--green); }
+  .peg-ok { background: rgba(245,158,11,0.12); color: var(--accent4); }
+  .peg-high { background: rgba(248,113,113,0.12); color: var(--red); }
+
+  /* MISC */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .hint { font-size: 11px; color: var(--text3); margin-top: 5px; font-family: 'DM Mono', monospace; }
+  .cagr-box { display: inline-flex; align-items: center; gap: 8px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 6px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); }
+  .cagr-val { color: var(--accent); font-weight: 500; }
+  .error { color: var(--red); font-size: 13px; margin-top: 8px; font-family: 'DM Mono', monospace; }
+  .wacc-sub { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-top: 0.75rem; }
+  .stitle { font-size: 11px; font-weight: 400; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; margin-top: 1.2rem; font-family: 'DM Mono', monospace; }
+  .toggle-row { display: flex; align-items: center; gap: 10px; margin: 1rem 0 0.5rem; }
+  .toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .knob { position: absolute; inset: 0; background: var(--border2); border-radius: 20px; cursor: pointer; transition: background 0.2s; }
+  .knob:before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s; }
+  .toggle input:checked + .knob { background: var(--accent); }
+  .toggle input:checked + .knob:before { transform: translateX(16px); }
+
+  /* TABS */
+  .inner-tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .inner-tab { background: none; border: 1px solid var(--border); color: var(--text3); font-size: 12px; font-family: 'DM Mono', monospace; padding: 5px 14px; border-radius: var(--radius); cursor: pointer; transition: all 0.15s; }
+  .inner-tab:hover { border-color: var(--border2); color: var(--text2); }
+  .inner-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(110,231,183,0.06); }
+  .inner-content { display: none; }
+  .inner-content.active { display: block; }
+
+  /* HIDDEN */
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); }
+  footer a { color: var(--text2); }
+
+  @media (max-width: 640px) {
+    .metric-row { grid-template-columns: 1fr 1fr; }
+    .grid3 { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 3rem 1.25rem 2rem; }
+    .tab-section, .disclaimer, .readme { padding: 0 1.25rem 3rem; }
+    header { padding: 0 1.25rem; }
+    nav button { font-size: 11px; padding: 5px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">equity<span>.</span>toolkit</div>
+  <nav>
+    <button class="active" onclick="showSection('home')">home</button>
+    <button onclick="showSection('dcf')">dcf</button>
+    <button onclick="showSection('evebitda')">ev/ebitda</button>
+    <button onclick="showSection('ddm')">ddm</button>
+    <button onclick="showSection('pe')">p/e + peg</button>
+  </nav>
+</header>
+
+<!-- HOME -->
+<div id="section-home" class="tab-section active">
+  <div class="hero">
+    <div class="hero-tag">portfolio project</div>
+    <h1>Equity Valuation<br /><strong>Toolkit</strong></h1>
+    <p class="hero-desc">A collection of four fundamental valuation models built from scratch — DCF, EV/EBITDA, DDM, and Forward P/E with PEG ratio. Each model includes sensitivity analysis and real-world data examples.</p>
+    <div class="hero-meta">
+      <div class="meta-item">models<span>4</span></div>
+      <div class="meta-item">built with<span>HTML / CSS / JS</span></div>
+      <div class="meta-item">data<span>real 10-K / public</span></div>
+      <div class="meta-item">author<span>Jakub</span></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <div class="disclaimer-box">
+      <div class="disc-icon">⚠</div>
+      <div class="disc-text">
+        <strong>Disclaimer:</strong> This toolkit is built purely as a <strong>portfolio and educational project</strong> to demonstrate knowledge of equity valuation methodologies. It does <strong>not</strong> constitute financial advice, investment advice, or any form of financial services. All models, outputs, and data presented here are for illustrative purposes only. Always consult a qualified financial professional before making any investment decisions.
+      </div>
+    </div>
+  </div>
+
+  <div class="readme">
+    <div class="readme-box">
+      <div class="readme-header">
+        <div class="readme-dot" style="background:#f87171;"></div>
+        <div class="readme-dot" style="background:#f59e0b;"></div>
+        <div class="readme-dot" style="background:#6ee7b7;"></div>
+        <span style="margin-left:8px;">README.md</span>
+      </div>
+      <div class="readme-body">
+        <h2>About this project</h2>
+        <p>This is a self-initiated portfolio project built during my first year of studying Finance, Banking & Investment at EUBA (Ekonomická univerzita v Bratislave). The goal was to implement the four most widely used equity valuation models in a clean, interactive format — reinforcing theoretical knowledge with hands-on application.</p>
+        <p>Each model was designed to mirror real analyst workflows: using historical financial data (sourced from public 10-K filings), projecting forward estimates, and stress-testing assumptions through sensitivity analysis.</p>
+
+        <h2>Valuation models</h2>
+        <div class="method-grid">
+          <div class="method-card">
+            <div class="mc-label">01 — DCF</div>
+            <div class="mc-name">Discounted Cash Flow</div>
+            <div class="mc-desc">Multi-stage FCF growth, WACC via CAPM, terminal value, sensitivity vs WACC × TGR. Backtested on GOOGL.</div>
+          </div>
+          <div class="method-card">
+            <div class="mc-label">02 — EV/EBITDA</div>
+            <div class="mc-name">Enterprise Value Multiple</div>
+            <div class="mc-desc">Relative valuation using sector multiples, bear/base/bull case, peer group comparison (GOOGL, META, MSFT, AMZN).</div>
+          </div>
+          <div class="method-card">
+            <div class="mc-label">03 — DDM</div>
+            <div class="mc-name">Dividend Discount Model</div>
+            <div class="mc-desc">Two-stage DDM with high-growth phase transitioning to Gordon Growth terminal value. Backtested on JNJ.</div>
+          </div>
+          <div class="method-card">
+            <div class="mc-label">04 — P/E + PEG</div>
+            <div class="mc-name">Earnings Multiple</div>
+            <div class="mc-desc">Forward P/E implied price, PEG ratio analysis, peer group comparison across big tech.</div>
+          </div>
+        </div>
+
+        <h2>Key features</h2>
+        <ul>
+          <li>Historical data input with automatic CAGR calculation</li>
+          <li>Hybrid WACC — enter directly or calculate via CAPM components</li>
+          <li>Sensitivity analysis tables for every model</li>
+          <li>Peer group comparison with relative bar charts</li>
+          <li>Margin of safety calculation vs live market price</li>
+          <li>Fully client-side — no backend, no APIs, no tracking</li>
+        </ul>
+
+        <h2>Tech stack</h2>
+        <p>Plain <code>HTML</code> + <code>CSS</code> + <code>JavaScript</code> — no frameworks, no dependencies. Deployed via GitHub Pages.</p>
+
+        <h2>Data sources</h2>
+        <p>Historical financials sourced from public SEC 10-K filings, Alphabet IR, Johnson & Johnson IR, and StockAnalysis.com. All data is for educational illustration only.</p>
+
+        <h2>Author</h2>
+        <p>Jakub — Finance, Banking & Investment student at EUBA Bratislava. Interested in equity research, fundamental analysis, and buy-side roles. This project is part of a broader effort to build practical finance skills alongside academic study.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DCF -->
+<div id="section-dcf" class="tab-section">
+  <div class="tab-section" style="display:block; padding: 2rem 2rem 4rem; max-width:900px; margin:0 auto;">
+    <div class="section-header">
+      <div class="section-tag">01 — discounted cash flow</div>
+      <div class="section-title">DCF — <strong>intrinsic value</strong></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">historical FCF (billions)</div>
+      <div class="hist-grid" id="dcf-hist-grid"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn-sm" onclick="dcfAddHist()">+ year</button>
+        <button class="btn-sm" onclick="dcfRemoveHist()">− year</button>
+        <div class="cagr-box">Historical CAGR: <span class="cagr-val" id="dcf-cagr">—</span></div>
+        <button class="btn-sm btn-suggest" onclick="dcfSuggestRates()">↓ suggest growth rates</button>
+      </div>
+      <p class="hint">FCF = Operating Cash Flow − CapEx | Pre-filled: GOOGL 2020–2024</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">projected FCF growth rates (%)</div>
+      <div class="proj-grid" id="dcf-proj-grid"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;">
+        <button class="btn-sm" onclick="dcfAddProj()">+ year</button>
+        <button class="btn-sm" onclick="dcfRemoveProj()">− year</button>
+        <span id="dcf-proj-count" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);"></span>
+      </div>
+      <p class="hint">Blue fields = suggested from CAGR with decay. Edit freely.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">other inputs</div>
+      <div class="grid3">
+        <div class="field"><label>Terminal growth rate (%)</label><input type="number" id="dcf-tgr" value="3.0" step="0.1" class="prefilled" /></div>
+        <div class="field"><label>Net debt (neg = net cash, B)</label><input type="number" id="dcf-netdebt" value="-84" step="1" class="prefilled" /></div>
+        <div class="field"><label>Shares outstanding (B)</label><input type="number" id="dcf-shares" value="12.1" step="0.1" class="prefilled" /></div>
+      </div>
+
+      <div class="toggle-row">
+        <label class="toggle"><input type="checkbox" id="dcf-wacc-toggle" onchange="dcfToggleWacc()" /><span class="knob"></span></label>
+        <span style="font-size:13px;color:var(--text2);">I know my WACC — enter directly</span>
+      </div>
+      <div id="dcf-wacc-direct">
+        <div class="field" style="max-width:200px;"><label>WACC (%)</label><input type="number" id="dcf-wacc-manual" value="9" step="0.1" /></div>
+      </div>
+      <div id="dcf-wacc-calc">
+        <div class="wacc-sub">
+          <div class="stitle">cost of equity — CAPM</div>
+          <div class="grid3">
+            <div class="field"><label>Risk-free rate (%)</label><input type="number" id="dcf-rf" value="4.3" step="0.1" oninput="dcfUpdateWacc()" class="prefilled" /></div>
+            <div class="field"><label>Beta</label><input type="number" id="dcf-beta" value="1.11" step="0.05" oninput="dcfUpdateWacc()" class="prefilled" /></div>
+            <div class="field"><label>Equity risk premium (%)</label><input type="number" id="dcf-erp" value="4.5" step="0.1" oninput="dcfUpdateWacc()" class="prefilled" /></div>
+          </div>
+          <div class="stitle">cost of debt & structure</div>
+          <div class="grid3">
+            <div class="field"><label>Cost of debt (%)</label><input type="number" id="dcf-cod" value="2.5" step="0.1" oninput="dcfUpdateWacc()" class="prefilled" /></div>
+            <div class="field"><label>Tax rate (%)</label><input type="number" id="dcf-tax" value="17" oninput="dcfUpdateWacc()" class="prefilled" /></div>
+            <div class="field"><label>Debt weight D/(D+E) (%)</label><input type="number" id="dcf-dw" value="2" oninput="dcfUpdateWacc()" class="prefilled" /></div>
+          </div>
+          <div style="margin-top:10px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">Calculated WACC: <span id="dcf-wacc-computed" style="color:var(--accent);">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="dcfCalculate()">calculate intrinsic value</button>
+    <div id="dcf-error" class="error"></div>
+
+    <div id="dcf-results" style="display:none;margin-top:1.5rem;">
+      <div class="divider"></div>
+      <div class="metric-row">
+        <div class="mcard accent"><div class="ml">intrinsic value / share</div><div class="mv" id="dcf-r-pershare">—</div><div class="ms">PV FCF + terminal value − net debt</div></div>
+        <div class="mcard"><div class="ml">total intrinsic value</div><div class="mv" id="dcf-r-total">—</div></div>
+        <div class="mcard"><div class="ml">WACC used</div><div class="mv" id="dcf-r-wacc">—</div></div>
+      </div>
+      <div class="metric-row">
+        <div class="mcard"><div class="ml">PV projected FCF</div><div class="mv" id="dcf-r-pvfcf">—</div></div>
+        <div class="mcard"><div class="ml">terminal value (undiscounted)</div><div class="mv" id="dcf-r-tv">—</div></div>
+        <div class="mcard"><div class="ml">PV terminal value</div><div class="mv" id="dcf-r-pvtv">—</div></div>
+      </div>
+      <div class="stitle" style="margin-top:1.5rem;">sensitivity — intrinsic value / share</div>
+      <p class="hint" style="margin-bottom:8px;">Rows = terminal growth rate | Columns = WACC | * = near market price</p>
+      <div style="overflow-x:auto;"><table class="sens-table" id="dcf-sens"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- EV/EBITDA -->
+<div id="section-evebitda" class="tab-section">
+  <div style="display:block; padding: 2rem 2rem 4rem; max-width:900px; margin:0 auto;">
+    <div class="section-header">
+      <div class="section-tag">02 — enterprise value multiple</div>
+      <div class="section-title">EV/EBITDA — <strong>relative valuation</strong></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">historical EBITDA — GOOGL (billions USD)</div>
+      <div class="hist-grid" id="ev-hist-grid"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn-sm" onclick="evAddHist()">+ year</button>
+        <button class="btn-sm" onclick="evRemoveHist()">− year</button>
+        <div class="cagr-box">EBITDA CAGR: <span class="cagr-val" id="ev-cagr">—</span></div>
+      </div>
+      <p class="hint">EBITDA = Net Income + Interest + Taxes + D&A | Source: Alphabet 10-K</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">valuation inputs</div>
+      <div class="grid3">
+        <div class="field"><label>Forward EBITDA (B)</label><input type="number" id="ev-fwd" value="155" step="1" class="prefilled" /></div>
+        <div class="field"><label>Net debt (neg = net cash, B)</label><input type="number" id="ev-netdebt" value="-84" step="1" class="prefilled" /></div>
+        <div class="field"><label>Shares outstanding (B)</label><input type="number" id="ev-shares" value="12.1" step="0.1" class="prefilled" /></div>
+      </div>
+      <div class="grid3" style="margin-top:10px;">
+        <div class="field"><label>EV/EBITDA — bear case</label><input type="number" id="ev-bear" value="14" step="0.5" /></div>
+        <div class="field"><label>EV/EBITDA — base case</label><input type="number" id="ev-base" value="18" step="0.5" /></div>
+        <div class="field"><label>EV/EBITDA — bull case</label><input type="number" id="ev-bull" value="22" step="0.5" /></div>
+      </div>
+      <p class="hint">GOOGL historical median: 18.6x | 5yr low: 11x (2022) | META: ~13x | MSFT: ~22x | Market price: $296</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">peer group — adjust multiples below</div>
+      <div id="ev-peer-inputs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;"></div>
+    </div>
+
+    <button class="btn-primary" onclick="evCalculate()">calculate valuation</button>
+    <div id="ev-error" class="error"></div>
+
+    <div id="ev-results" style="display:none;margin-top:1.5rem;">
+      <div class="divider"></div>
+      <div class="metric-row">
+        <div class="mcard"><div class="ml">bear case</div><div class="mv" id="ev-r-bear">—</div><div class="ms" id="ev-r-bear-d">—</div></div>
+        <div class="mcard accent"><div class="ml">base case</div><div class="mv" id="ev-r-base">—</div><div class="ms" id="ev-r-base-d">—</div></div>
+        <div class="mcard"><div class="ml">bull case</div><div class="mv" id="ev-r-bull">—</div><div class="ms" id="ev-r-bull-d">—</div></div>
+      </div>
+      <div class="metric-row">
+        <div class="mcard"><div class="ml">forward EBITDA</div><div class="mv" id="ev-r-ebitda">—</div></div>
+        <div class="mcard"><div class="ml">implied EV (base)</div><div class="mv" id="ev-r-ev">—</div></div>
+        <div class="mcard"><div class="ml">market price</div><div class="mv">~$296</div><div class="ms">GOOGL, Mar 2026</div></div>
+      </div>
+      <div class="stitle" style="margin-top:1.5rem;">peer group comparison</div>
+      <div class="peer-grid" id="ev-peer-cards"></div>
+      <div class="stitle" style="margin-top:1.5rem;">sensitivity — implied price / share ($)</div>
+      <p class="hint" style="margin-bottom:8px;">Rows = EV/EBITDA multiple | Columns = forward EBITDA</p>
+      <div style="overflow-x:auto;"><table class="sens-table" id="ev-sens"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- DDM -->
+<div id="section-ddm" class="tab-section">
+  <div style="display:block; padding: 2rem 2rem 4rem; max-width:900px; margin:0 auto;">
+    <div class="section-header">
+      <div class="section-tag">03 — dividend discount model</div>
+      <div class="section-title">DDM — <strong>two-stage</strong></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">historical dividends per share — JNJ ($)</div>
+      <div class="hist-grid" id="ddm-hist-grid"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn-sm" onclick="ddmAddHist()">+ year</button>
+        <button class="btn-sm" onclick="ddmRemoveHist()">− year</button>
+        <div class="cagr-box">Dividend CAGR: <span class="cagr-val" id="ddm-cagr">—</span></div>
+      </div>
+      <p class="hint">Source: JNJ 8-K filings. 62 consecutive years of dividend growth (Dividend King).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">phase 1 — high growth</div>
+      <div class="grid3">
+        <div class="field"><label>Current dividend D0 ($)</label><input type="number" id="ddm-d0" value="5.20" step="0.01" class="prefilled" /></div>
+        <div class="field"><label>Phase 1 growth rate (%)</label><input type="number" id="ddm-g1" value="6.0" step="0.5" class="prefilled" /></div>
+        <div class="field"><label>Phase 1 years</label><input type="number" id="ddm-n" value="7" min="1" max="15" class="prefilled" /></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">phase 2 — terminal (Gordon Growth)</div>
+      <div class="grid2">
+        <div class="field"><label>Terminal growth rate (%)</label><input type="number" id="ddm-tg" value="3.5" step="0.25" class="prefilled" /></div>
+        <div class="field"><label>Required return Ke (%)</label><input type="number" id="ddm-ke" value="7.4" step="0.1" class="prefilled" /></div>
+      </div>
+      <div class="wacc-sub" style="margin-top:0.75rem;">
+        <div class="stitle" style="margin-top:0;">CAPM calculator — Ke</div>
+        <div class="grid3">
+          <div class="field"><label>Risk-free rate (%)</label><input type="number" id="ddm-rf" value="4.3" step="0.1" oninput="ddmUpdateKe()" /></div>
+          <div class="field"><label>Beta</label><input type="number" id="ddm-beta" value="0.35" step="0.05" oninput="ddmUpdateKe()" /></div>
+          <div class="field"><label>ERP (%)</label><input type="number" id="ddm-erp" value="4.5" step="0.1" oninput="ddmUpdateKe()" /></div>
+        </div>
+        <div style="margin-top:10px;display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">Ke (CAPM): <span id="ddm-ke-computed" style="color:var(--accent);">—</span></span>
+          <button class="btn-sm" onclick="ddmApplyKe()">apply</button>
+        </div>
+        <p class="hint">JNJ Beta 0.35 — highly defensive. Low beta = lower Ke = higher DDM value.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">market comparison</div>
+      <div class="field" style="max-width:200px;"><label>Current JNJ price ($)</label><input type="number" id="ddm-mkt" value="240" step="1" class="prefilled" /></div>
+    </div>
+
+    <button class="btn-primary" onclick="ddmCalculate()">calculate intrinsic value</button>
+    <div id="ddm-error" class="error"></div>
+
+    <div id="ddm-results" style="display:none;margin-top:1.5rem;">
+      <div class="divider"></div>
+      <div class="metric-row">
+        <div class="mcard accent"><div class="ml">intrinsic value / share</div><div class="mv" id="ddm-r-iv">—</div><div class="ms">PV phase 1 + PV terminal value</div></div>
+        <div class="mcard"><div class="ml">market price</div><div class="mv" id="ddm-r-mkt">—</div></div>
+        <div class="mcard"><div class="ml">margin of safety</div><div class="mv" id="ddm-r-mos">—</div><div class="ms" id="ddm-r-mos-label">—</div></div>
+      </div>
+      <div class="metric-row">
+        <div class="mcard"><div class="ml">PV phase 1 dividends</div><div class="mv" id="ddm-r-pv1">—</div></div>
+        <div class="mcard"><div class="ml">terminal value (undiscounted)</div><div class="mv" id="ddm-r-tv">—</div></div>
+        <div class="mcard"><div class="ml">PV terminal value</div><div class="mv" id="ddm-r-pvtv">—</div></div>
+      </div>
+      <div class="stitle" style="margin-top:1.5rem;">dividend schedule — phase 1</div>
+      <div style="overflow-x:auto;"><table class="phase-table" id="ddm-phase-table"></table></div>
+      <div class="stitle" style="margin-top:1.5rem;">sensitivity — intrinsic value ($)</div>
+      <p class="hint" style="margin-bottom:8px;">Rows = terminal growth | Columns = Ke | * = near market price</p>
+      <div style="overflow-x:auto;"><table class="sens-table" id="ddm-sens"></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- P/E + PEG -->
+<div id="section-pe" class="tab-section">
+  <div style="display:block; padding: 2rem 2rem 4rem; max-width:900px; margin:0 auto;">
+    <div class="section-header">
+      <div class="section-tag">04 — earnings multiple</div>
+      <div class="section-title">Forward P/E + <strong>PEG ratio</strong></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">historical EPS — GOOGL ($)</div>
+      <div class="hist-grid" id="pe-hist-grid"></div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn-sm" onclick="peAddHist()">+ year</button>
+        <button class="btn-sm" onclick="peRemoveHist()">− year</button>
+        <div class="cagr-box">EPS CAGR: <span class="cagr-val" id="pe-cagr">—</span></div>
+      </div>
+      <p class="hint">Adjusted for 20:1 stock split (Aug 2022). Source: Alphabet 10-K.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">valuation inputs</div>
+      <div class="grid3">
+        <div class="field"><label>Forward EPS ($)</label><input type="number" id="pe-feps" value="13.50" step="0.1" class="prefilled" /></div>
+        <div class="field"><label>Current price GOOGL ($)</label><input type="number" id="pe-mkt" value="296" step="1" class="prefilled" /></div>
+        <div class="field"><label>Projected EPS growth (%)</label><input type="number" id="pe-growth" value="18" step="0.5" class="prefilled" /></div>
+      </div>
+      <div class="grid3" style="margin-top:10px;">
+        <div class="field"><label>Fair P/E — bear</label><input type="number" id="pe-bear" value="20" step="0.5" /></div>
+        <div class="field"><label>Fair P/E — base</label><input type="number" id="pe-base" value="25" step="0.5" /></div>
+        <div class="field"><label>Fair P/E — bull</label><input type="number" id="pe-bull" value="30" step="0.5" /></div>
+      </div>
+      <p class="hint">GOOGL historical P/E median ~23x | META ~22x fwd | MSFT ~28x fwd | AMZN ~29x fwd | PEG &lt;1 = potentially undervalued</p>
+    </div>
+
+    <button class="btn-primary" onclick="peCalculate()">calculate valuation</button>
+    <div id="pe-error" class="error"></div>
+
+    <div id="pe-results" style="display:none;margin-top:1.5rem;">
+      <div class="divider"></div>
+
+      <div class="inner-tabs">
+        <button class="inner-tab active" onclick="peSwitchTab('fwdpe')">forward p/e</button>
+        <button class="inner-tab" onclick="peSwitchTab('peg')">peg ratio</button>
+        <button class="inner-tab" onclick="peSwitchTab('peers')">peer group</button>
+      </div>
+
+      <div id="pe-tab-fwdpe" class="inner-content active">
+        <div class="metric-row">
+          <div class="mcard"><div class="ml">bear case</div><div class="mv" id="pe-r-bear">—</div><div class="ms" id="pe-r-bear-d">—</div></div>
+          <div class="mcard accent"><div class="ml">base case</div><div class="mv" id="pe-r-base">—</div><div class="ms" id="pe-r-base-d">—</div></div>
+          <div class="mcard"><div class="ml">bull case</div><div class="mv" id="pe-r-bull">—</div><div class="ms" id="pe-r-bull-d">—</div></div>
+        </div>
+        <div class="metric-row">
+          <div class="mcard"><div class="ml">current fwd P/E</div><div class="mv" id="pe-r-currpe">—</div><div class="ms">price / fwd EPS</div></div>
+          <div class="mcard"><div class="ml">forward EPS</div><div class="mv" id="pe-r-feps">—</div></div>
+          <div class="mcard"><div class="ml">market price</div><div class="mv" id="pe-r-mkt">—</div></div>
+        </div>
+        <div class="stitle" style="margin-top:1.2rem;">sensitivity — implied price ($)</div>
+        <p class="hint" style="margin-bottom:8px;">Rows = Fair P/E | Columns = Forward EPS</p>
+        <div style="overflow-x:auto;"><table class="sens-table" id="pe-sens-pe"></table></div>
+      </div>
+
+      <div id="pe-tab-peg" class="inner-content">
+        <div class="metric-row">
+          <div class="mcard accent"><div class="ml">PEG ratio</div><div class="mv" id="pe-r-peg">—</div><div class="ms" id="pe-r-peg-label">—</div></div>
+          <div class="mcard"><div class="ml">implied price @ PEG = 1</div><div class="mv" id="pe-r-peg1">—</div><div class="ms">fair value by PEG</div></div>
+          <div class="mcard"><div class="ml">implied price @ PEG = 1.5</div><div class="mv" id="pe-r-peg15">—</div><div class="ms">premium for high-growth</div></div>
+        </div>
+        <p style="font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:1rem;">PEG &lt; 1 = undervalued relative to growth | 1–2 = fairly valued | &gt; 2 = expensive</p>
+        <div class="stitle">sensitivity — PEG at different growth rates</div>
+        <p class="hint" style="margin-bottom:8px;">Rows = EPS growth (%) | Columns = Forward P/E</p>
+        <div style="overflow-x:auto;"><table class="sens-table" id="pe-sens-peg"></table></div>
+      </div>
+
+      <div id="pe-tab-peers" class="inner-content">
+        <div class="peer-grid" id="pe-peer-cards"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>equity valuation toolkit &nbsp;·&nbsp; portfolio project &nbsp;·&nbsp; <a href="#">github</a></p>
+  <p style="margin-top:6px;">Not financial advice. For educational and portfolio purposes only.</p>
+</footer>
+
+<script>
+// ─── NAV ───────────────────────────────────────────────────────────────────
+function showSection(name) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ─── HELPERS ───────────────────────────────────────────────────────────────
+function calcCAGR(vals) {
+  if (vals.length < 2 || vals[0] <= 0) return null;
+  return (Math.pow(vals[vals.length-1]/vals[0], 1/(vals.length-1)) - 1) * 100;
+}
+function fmtB(n) {
+  if (Math.abs(n) >= 1000) return (n/1000).toFixed(2) + 'T';
+  if (Math.abs(n) >= 1) return n.toFixed(1) + 'B';
+  return (n*1000).toFixed(0) + 'M';
+}
+function diffStr(v, mkt) {
+  const d = ((v-mkt)/mkt*100);
+  return (d>=0?'+':'')+d.toFixed(1)+'% vs market';
+}
+function diffColor(v, mkt) {
+  const d=(v-mkt)/mkt*100;
+  return d>5?'var(--green)':d<-5?'var(--red)':'var(--accent4)';
+}
+function tagClass(v, mkt) {
+  const d=(v-mkt)/mkt*100;
+  return d>5?'tag-under':d<-5?'tag-over':'tag-fair';
+}
+function tagLabel(v, mkt) {
+  const d=(v-mkt)/mkt*100;
+  return d>5?'undervalued':d<-5?'overvalued':'fair value';
+}
+
+// ─── DCF ───────────────────────────────────────────────────────────────────
+const DCF_HIST = [{y:2020,v:42.8},{y:2021,v:67.0},{y:2022,v:60.0},{y:2023,v:69.5},{y:2024,v:72.8}];
+let dcfHistN = 5, dcfProjN = 6;
+
+function dcfBuildHist() {
+  const c = document.getElementById('dcf-hist-grid');
+  const ex = [...c.querySelectorAll('input')].map(i=>i.value);
+  c.innerHTML='';
+  for(let i=0;i<dcfHistN;i++){
+    const def=DCF_HIST[i]||{y:2024+(i-4),v:''};
+    const val=ex[i]!==undefined&&ex[i]!==''?ex[i]:def.v;
+    const d=document.createElement('div'); d.className='field';
+    d.innerHTML=`<label>FCF ${def.y} (B)</label><input type="number" id="dcf-h${i}" value="${val}" step="0.1" class="prefilled" oninput="dcfOnHistChange()" />`;
+    c.appendChild(d);
+  }
+  dcfOnHistChange();
+}
+function dcfAddHist(){if(dcfHistN<10){dcfHistN++;dcfBuildHist();}}
+function dcfRemoveHist(){if(dcfHistN>2){dcfHistN--;dcfBuildHist();}}
+function dcfGetHist(){const v=[];for(let i=0;i<dcfHistN;i++){const x=parseFloat(document.getElementById('dcf-h'+i)?.value);if(!isNaN(x)&&x>0)v.push(x);}return v;}
+function dcfOnHistChange(){const c=calcCAGR(dcfGetHist());document.getElementById('dcf-cagr').textContent=c!==null?c.toFixed(1)+'%':'—';}
+function dcfBuildProj(){
+  const c=document.getElementById('dcf-proj-grid');
+  const ex=[...c.querySelectorAll('input')].map(i=>({v:i.value,s:i.classList.contains('suggested')}));
+  c.innerHTML='';
+  for(let i=0;i<dcfProjN;i++){
+    const prev=ex[i];
+    const d=document.createElement('div');d.className='field';
+    d.innerHTML=`<label>Year ${i+1} (%)</label><input type="number" id="dcf-p${i}" value="${prev?prev.v:''}" placeholder="%" step="0.5" class="${prev&&prev.s?'suggested':''}" oninput="this.classList.remove('suggested')" />`;
+    c.appendChild(d);
+  }
+  document.getElementById('dcf-proj-count').textContent=dcfProjN+' projection years';
+}
+function dcfAddProj(){if(dcfProjN<15){dcfProjN++;dcfBuildProj();}}
+function dcfRemoveProj(){if(dcfProjN>3){dcfProjN--;dcfBuildProj();}}
+function dcfSuggestRates(){
+  const c=calcCAGR(dcfGetHist());
+  if(c===null){alert('Enter at least 2 positive FCF values.');return;}
+  for(let i=0;i<dcfProjN;i++){
+    const s=Math.max(c*Math.pow(0.82,i),2.0).toFixed(1);
+    const el=document.getElementById('dcf-p'+i);
+    if(el){el.value=s;el.classList.add('suggested');}
+  }
+}
+function dcfToggleWacc(){
+  const on=document.getElementById('dcf-wacc-toggle').checked;
+  document.getElementById('dcf-wacc-direct').style.display=on?'block':'none';
+  document.getElementById('dcf-wacc-calc').style.display=on?'none':'block';
+  if(!on)dcfUpdateWacc();
+}
+function dcfUpdateWacc(){
+  const rf=parseFloat(document.getElementById('dcf-rf').value)||0;
+  const beta=parseFloat(document.getElementById('dcf-beta').value)||0;
+  const erp=parseFloat(document.getElementById('dcf-erp').value)||0;
+  const cod=parseFloat(document.getElementById('dcf-cod').value)||0;
+  const tax=parseFloat(document.getElementById('dcf-tax').value)||0;
+  const dw=(parseFloat(document.getElementById('dcf-dw').value)||0)/100;
+  const ke=rf+beta*erp; const kd=cod*(1-tax/100);
+  const w=(1-dw)*ke+dw*kd;
+  document.getElementById('dcf-wacc-computed').textContent=w.toFixed(2)+'%';
+  return w;
+}
+function dcfGetWacc(){return document.getElementById('dcf-wacc-toggle').checked?parseFloat(document.getElementById('dcf-wacc-manual').value):dcfUpdateWacc();}
+function dcfRunDCF(base,rates,tgr,wacc,nd,sh){
+  const w=wacc/100,tg=tgr/100; let pv=0,cf=base;
+  for(let i=0;i<rates.length;i++){cf=cf*(1+rates[i]/100);pv+=cf/Math.pow(1+w,i+1);}
+  const tv=cf*(1+tg)/(w-tg); const pvtv=tv/Math.pow(1+w,rates.length);
+  const tot=pv+pvtv-nd;
+  return{pvFCF:pv,tv,pvTV:pvtv,total:tot,perShare:tot/sh};
+}
+function dcfCalculate(){
+  document.getElementById('dcf-error').textContent='';
+  const hist=dcfGetHist(); if(hist.length<1){document.getElementById('dcf-error').textContent='Enter at least 1 historical FCF.';return;}
+  const base=hist[hist.length-1];
+  const rates=[];
+  for(let i=0;i<dcfProjN;i++){const v=parseFloat(document.getElementById('dcf-p'+i)?.value);if(isNaN(v)){document.getElementById('dcf-error').textContent=`Missing growth rate for year ${i+1}.`;return;}rates.push(v);}
+  const tgr=parseFloat(document.getElementById('dcf-tgr').value);
+  const nd=parseFloat(document.getElementById('dcf-netdebt').value)||0;
+  const sh=parseFloat(document.getElementById('dcf-shares').value);
+  const wacc=dcfGetWacc();
+  if(isNaN(tgr)||isNaN(sh)||isNaN(wacc)){document.getElementById('dcf-error').textContent='Check inputs.';return;}
+  if(wacc/100<=tgr/100){document.getElementById('dcf-error').textContent='WACC must exceed terminal growth rate.';return;}
+  const r=dcfRunDCF(base,rates,tgr,wacc,nd,sh);
+  document.getElementById('dcf-r-pershare').textContent='$'+r.perShare.toFixed(2);
+  document.getElementById('dcf-r-total').textContent=fmtB(r.total);
+  document.getElementById('dcf-r-wacc').textContent=wacc.toFixed(2)+'%';
+  document.getElementById('dcf-r-pvfcf').textContent=fmtB(r.pvFCF);
+  document.getElementById('dcf-r-tv').textContent=fmtB(r.tv);
+  document.getElementById('dcf-r-pvtv').textContent=fmtB(r.pvTV);
+  const wR=[-2,-1,0,1,2].map(d=>+(wacc+d).toFixed(1));
+  const tR=[-1.5,-0.75,0,0.75,1.5].map(d=>+(tgr+d).toFixed(2));
+  const mkt=296;
+  const all=tR.flatMap(t=>wR.map(w=>{if(w/100>t/100)return dcfRunDCF(base,rates,t,w,nd,sh).perShare;return null;})).filter(x=>x!==null);
+  const mn=Math.min(...all),mx=Math.max(...all);
+  let html='<tr><th>TGR \\ WACC</th>';wR.forEach(w=>html+=`<th>${w}%</th>`);html+='</tr>';
+  tR.forEach(t=>{
+    html+=`<tr><td style="font-weight:500;color:var(--text2);">${t}%</td>`;
+    wR.forEach(w=>{
+      if(w/100<=t/100){html+=`<td style="color:var(--text3);">N/A</td>`;return;}
+      const v=dcfRunDCF(base,rates,t,w,nd,sh).perShare;
+      const rng=mx-mn||1; const cls=v<mn+rng*0.33?'sc-low':v>mn+rng*0.66?'sc-high':'sc-mid';
+      html+=`<td class="${cls}">$${v.toFixed(0)}${Math.abs(v-mkt)<12?' *':''}</td>`;
+    });html+='</tr>';
+  });
+  document.getElementById('dcf-sens').innerHTML=html;
+  document.getElementById('dcf-results').style.display='block';
+}
+
+// ─── EV/EBITDA ─────────────────────────────────────────────────────────────
+const EV_HIST=[{y:2020,v:54.3},{y:2021,v:89.0},{y:2022,v:88.3},{y:2023,v:96.2},{y:2024,v:127.7}];
+const EV_PEERS=[
+  {t:'GOOGL',n:'Alphabet', ebitda:127.7,mult:18.6,price:296,sh:12.1,nd:-84,color:'var(--accent)'},
+  {t:'META', n:'Meta',     ebitda:86.9, mult:13.3,price:594,sh:2.53,nd:-58,color:'var(--accent2)'},
+  {t:'MSFT', n:'Microsoft',ebitda:145.0,mult:22.0,price:388,sh:7.43,nd:-27,color:'var(--accent3)'},
+  {t:'AMZN', n:'Amazon',   ebitda:148.7,mult:17.0,price:227,sh:10.6,nd:58, color:'var(--accent4)'},
+];
+let evHistN=5;
+function evBuildHist(){
+  const c=document.getElementById('ev-hist-grid');
+  const ex=[...c.querySelectorAll('input')].map(i=>i.value);
+  c.innerHTML='';
+  for(let i=0;i<evHistN;i++){
+    const def=EV_HIST[i]||{y:2024+(i-4),v:''};
+    const val=ex[i]!==undefined&&ex[i]!==''?ex[i]:def.v;
+    const d=document.createElement('div');d.className='field';
+    d.innerHTML=`<label>EBITDA ${def.y} (B)</label><input type="number" id="ev-h${i}" value="${val}" step="0.1" class="prefilled" oninput="evOnHistChange()" />`;
+    c.appendChild(d);
+  }
+  evOnHistChange();
+}
+function evAddHist(){if(evHistN<8){evHistN++;evBuildHist();}}
+function evRemoveHist(){if(evHistN>2){evHistN--;evBuildHist();}}
+function evOnHistChange(){const vals=[];for(let i=0;i<evHistN;i++){const v=parseFloat(document.getElementById('ev-h'+i)?.value);if(!isNaN(v)&&v>0)vals.push(v);}const c=calcCAGR(vals);document.getElementById('ev-cagr').textContent=c!==null?c.toFixed(1)+'%':'—';}
+function evBuildPeerInputs(){
+  const c=document.getElementById('ev-peer-inputs');c.innerHTML='';
+  EV_PEERS.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:0.85rem 1rem;';
+    d.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:12px;color:${p.color};margin-bottom:8px;">${p.t} — ${p.n}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;"><div class="field"><label>EV/EBITDA (x)</label><input type="number" id="ev-pm${i}" value="${p.mult}" step="0.5" /></div><div class="field"><label>Price ($)</label><input type="number" id="ev-pp${i}" value="${p.price}" step="1" /></div></div>`;
+    c.appendChild(d);
+  });
+}
+function evCalcImpPrice(ebitda,mult,nd,sh){return(ebitda*mult-nd)/sh;}
+function evCalculate(){
+  document.getElementById('ev-error').textContent='';
+  const fwd=parseFloat(document.getElementById('ev-fwd').value);
+  const nd=parseFloat(document.getElementById('ev-netdebt').value)||0;
+  const sh=parseFloat(document.getElementById('ev-shares').value);
+  const bear=parseFloat(document.getElementById('ev-bear').value);
+  const base=parseFloat(document.getElementById('ev-base').value);
+  const bull=parseFloat(document.getElementById('ev-bull').value);
+  const mkt=296;
+  if([fwd,nd,sh,bear,base,bull].some(isNaN)){document.getElementById('ev-error').textContent='Check inputs.';return;}
+  const pBear=evCalcImpPrice(fwd,bear,nd,sh);
+  const pBase=evCalcImpPrice(fwd,base,nd,sh);
+  const pBull=evCalcImpPrice(fwd,bull,nd,sh);
+  ['bear','base','bull'].forEach((k,ki)=>{
+    const p=[pBear,pBase,pBull][ki];
+    document.getElementById(`ev-r-${k}`).textContent='$'+p.toFixed(0);
+    document.getElementById(`ev-r-${k}`).style.color=diffColor(p,mkt);
+    document.getElementById(`ev-r-${k}-d`).textContent=diffStr(p,mkt);
+  });
+  document.getElementById('ev-r-ebitda').textContent=fmtB(fwd);
+  document.getElementById('ev-r-ev').textContent=fmtB(fwd*base);
+  const maxM=Math.max(...EV_PEERS.map((_,i)=>parseFloat(document.getElementById('ev-pm'+i)?.value)||0));
+  const pc=document.getElementById('ev-peer-cards');pc.innerHTML='';
+  EV_PEERS.forEach((p,i)=>{
+    const m=parseFloat(document.getElementById('ev-pm'+i)?.value)||p.mult;
+    const pr=parseFloat(document.getElementById('ev-pp'+i)?.value)||p.price;
+    const imp=evCalcImpPrice(p.ebitda,m,p.nd,p.sh);
+    const d=document.createElement('div');d.className='peer-card'+(p.t==='GOOGL'?' highlight':'');
+    d.innerHTML=`<div class="peer-name" style="color:${p.color};">${p.t} <span>${p.n}</span></div><div class="peer-row"><span class="peer-label">EV/EBITDA</span><span class="peer-val">${m.toFixed(1)}x</span></div><div class="bar-wrap"><div class="bar-fill" style="width:${(m/maxM*100).toFixed(0)}%;background:${p.color};"></div></div><div class="peer-row" style="margin-top:6px;"><span class="peer-label">Market price</span><span class="peer-val">$${pr}</span></div><div class="peer-row"><span class="peer-label">Implied</span><span class="peer-val">$${imp.toFixed(0)} <span class="tag ${tagClass(imp,pr)}">${tagLabel(imp,pr)}</span></span></div>`;
+    pc.appendChild(d);
+  });
+  const mR=[-4,-2,0,2,4].map(d=>+(base+d).toFixed(1));
+  const eR=[0.85,0.92,1,1.08,1.16].map(f=>fwd*f);
+  const allV=mR.flatMap(m=>eR.map(e=>evCalcImpPrice(e,m,nd,sh)));
+  const mn=Math.min(...allV),mx=Math.max(...allV);
+  let html='<tr><th>Mult \\ EBITDA</th>';eR.forEach(e=>html+=`<th>${fmtB(e)}</th>`);html+='</tr>';
+  mR.forEach(m=>{
+    html+=`<tr><td style="font-weight:500;color:var(--text2);">${m.toFixed(1)}x</td>`;
+    eR.forEach(e=>{const v=evCalcImpPrice(e,m,nd,sh);const rng=mx-mn||1;const cls=v<mn+rng*0.33?'sc-low':v>mn+rng*0.66?'sc-high':'sc-mid';html+=`<td class="${cls}">$${v.toFixed(0)}${Math.abs(v-mkt)<15?' *':''}</td>`;});html+='</tr>';
+  });
+  document.getElementById('ev-sens').innerHTML=html;
+  document.getElementById('ev-results').style.display='block';
+}
+
+// ─── DDM ───────────────────────────────────────────────────────────────────
+const DDM_HIST=[{y:2019,v:3.75},{y:2020,v:4.04},{y:2021,v:4.24},{y:2022,v:4.52},{y:2023,v:4.76},{y:2024,v:4.96}];
+let ddmHistN=6;
+function ddmBuildHist(){
+  const c=document.getElementById('ddm-hist-grid');
+  const ex=[...c.querySelectorAll('input')].map(i=>i.value);
+  c.innerHTML='';
+  for(let i=0;i<ddmHistN;i++){
+    const def=DDM_HIST[i]||{y:2024+(i-5),v:''};
+    const val=ex[i]!==undefined&&ex[i]!==''?ex[i]:def.v;
+    const d=document.createElement('div');d.className='field';
+    d.innerHTML=`<label>Div ${def.y} ($)</label><input type="number" id="ddm-h${i}" value="${val}" step="0.01" class="prefilled" oninput="ddmOnHistChange()" />`;
+    c.appendChild(d);
+  }
+  ddmOnHistChange();
+}
+function ddmAddHist(){if(ddmHistN<10){ddmHistN++;ddmBuildHist();}}
+function ddmRemoveHist(){if(ddmHistN>2){ddmHistN--;ddmBuildHist();}}
+function ddmOnHistChange(){const vals=[];for(let i=0;i<ddmHistN;i++){const v=parseFloat(document.getElementById('ddm-h'+i)?.value);if(!isNaN(v)&&v>0)vals.push(v);}const c=calcCAGR(vals);document.getElementById('ddm-cagr').textContent=c!==null?c.toFixed(1)+'%':'—';}
+function ddmUpdateKe(){const rf=parseFloat(document.getElementById('ddm-rf').value)||0;const b=parseFloat(document.getElementById('ddm-beta').value)||0;const erp=parseFloat(document.getElementById('ddm-erp').value)||0;const ke=rf+b*erp;document.getElementById('ddm-ke-computed').textContent=ke.toFixed(2)+'%';return ke;}
+function ddmApplyKe(){document.getElementById('ddm-ke').value=ddmUpdateKe().toFixed(2);}
+function ddmCalcIV(d0,g1,n,gT,ke){let pv=0,d=d0;for(let i=1;i<=n;i++){d=d*(1+g1);pv+=d/Math.pow(1+ke,i);}const tv=d*(1+gT)/(ke-gT);return{pv1:pv,tv,pvTV:tv/Math.pow(1+ke,n),iv:pv+tv/Math.pow(1+ke,n),lastD:d};}
+function ddmCalculate(){
+  document.getElementById('ddm-error').textContent='';
+  const d0=parseFloat(document.getElementById('ddm-d0').value);
+  const g1=parseFloat(document.getElementById('ddm-g1').value)/100;
+  const n=parseInt(document.getElementById('ddm-n').value);
+  const gT=parseFloat(document.getElementById('ddm-tg').value)/100;
+  const ke=parseFloat(document.getElementById('ddm-ke').value)/100;
+  const mkt=parseFloat(document.getElementById('ddm-mkt').value);
+  if([d0,g1,n,gT,ke,mkt].some(isNaN)){document.getElementById('ddm-error').textContent='Check inputs.';return;}
+  if(ke<=gT){document.getElementById('ddm-error').textContent='Ke must exceed terminal growth rate.';return;}
+  const r=ddmCalcIV(d0,g1,n,gT,ke);
+  const mos=((r.iv-mkt)/mkt*100);
+  document.getElementById('ddm-r-iv').textContent='$'+r.iv.toFixed(2);
+  document.getElementById('ddm-r-mkt').textContent='$'+mkt.toFixed(2);
+  document.getElementById('ddm-r-mos').textContent=(mos>=0?'+':'')+mos.toFixed(1)+'%';
+  document.getElementById('ddm-r-mos').style.color=mos>=15?'var(--green)':mos>=-5?'var(--accent4)':'var(--red)';
+  document.getElementById('ddm-r-mos-label').textContent=mos>=15?'undervalued — good margin of safety':mos>=-5?'near fair value':'overvalued vs DDM';
+  document.getElementById('ddm-r-pv1').textContent='$'+r.pv1.toFixed(2);
+  document.getElementById('ddm-r-tv').textContent='$'+r.tv.toFixed(2);
+  document.getElementById('ddm-r-pvtv').textContent='$'+r.pvTV.toFixed(2);
+  let rows='<tr><th>Year</th><th>Dividend ($)</th><th>Discount factor</th><th>PV dividend ($)</th></tr>';
+  let d=d0;
+  for(let i=1;i<=n;i++){d=d*(1+g1);const df=Math.pow(1+ke,i);rows+=`<tr><td>Year ${i}</td><td>${d.toFixed(3)}</td><td>${df.toFixed(4)}</td><td>${(d/df).toFixed(3)}</td></tr>`;}
+  document.getElementById('ddm-phase-table').innerHTML=rows;
+  const keR=[-1.5,-0.75,0,0.75,1.5].map(x=>+(ke*100+x).toFixed(2));
+  const tgR=[-1,-0.5,0,0.5,1].map(x=>+(gT*100+x).toFixed(2));
+  const allV=tgR.flatMap(t=>keR.map(k=>{if(k/100>t/100)return ddmCalcIV(d0,g1,n,t/100,k/100).iv;return null;})).filter(x=>x!==null);
+  const mn=Math.min(...allV),mx=Math.max(...allV);
+  let html='<tr><th>TGR \\ Ke</th>';keR.forEach(k=>html+=`<th>${k}%</th>`);html+='</tr>';
+  tgR.forEach(t=>{
+    html+=`<tr><td style="font-weight:500;color:var(--text2);">${t}%</td>`;
+    keR.forEach(k=>{
+      if(k/100<=t/100){html+=`<td style="color:var(--text3);">N/A</td>`;return;}
+      const v=ddmCalcIV(d0,g1,n,t/100,k/100).iv;
+      const rng=mx-mn||1;const cls=v<mn+rng*0.33?'sc-low':v>mn+rng*0.66?'sc-high':'sc-mid';
+      html+=`<td class="${cls}">$${v.toFixed(0)}${Math.abs(v-mkt)<10?' *':''}</td>`;
+    });html+='</tr>';
+  });
+  document.getElementById('ddm-sens').innerHTML=html;
+  document.getElementById('ddm-results').style.display='block';
+}
+
+// ─── P/E + PEG ─────────────────────────────────────────────────────────────
+const PE_HIST=[{y:2021,v:5.61},{y:2022,v:4.56},{y:2023,v:5.80},{y:2024,v:8.04},{y:2025,v:10.81}];
+const PE_PEERS=[
+  {t:'GOOGL',n:'Alphabet', pe:27.4,fwdPe:21.9,peg:0.84,g:34,color:'var(--accent)'},
+  {t:'META', n:'Meta',     pe:26.6,fwdPe:22.0,peg:1.1, g:18,color:'var(--accent2)'},
+  {t:'MSFT', n:'Microsoft',pe:25.9,fwdPe:27.8,peg:0.86,g:13,color:'var(--accent3)'},
+  {t:'AMZN', n:'Amazon',   pe:34.3,fwdPe:28.6,peg:1.3, g:22,color:'var(--accent4)'},
+];
+let peHistN=5;
+function peBuildHist(){
+  const c=document.getElementById('pe-hist-grid');
+  const ex=[...c.querySelectorAll('input')].map(i=>i.value);
+  c.innerHTML='';
+  for(let i=0;i<peHistN;i++){
+    const def=PE_HIST[i]||{y:2025+(i-4),v:''};
+    const val=ex[i]!==undefined&&ex[i]!==''?ex[i]:def.v;
+    const d=document.createElement('div');d.className='field';
+    d.innerHTML=`<label>EPS ${def.y} ($)</label><input type="number" id="pe-h${i}" value="${val}" step="0.01" class="prefilled" oninput="peOnHistChange()" />`;
+    c.appendChild(d);
+  }
+  peOnHistChange();
+}
+function peAddHist(){if(peHistN<8){peHistN++;peBuildHist();}}
+function peRemoveHist(){if(peHistN>2){peHistN--;peBuildHist();}}
+function peOnHistChange(){const vals=[];for(let i=0;i<peHistN;i++){const v=parseFloat(document.getElementById('pe-h'+i)?.value);if(!isNaN(v)&&v>0)vals.push(v);}const c=calcCAGR(vals);document.getElementById('pe-cagr').textContent=c!==null?c.toFixed(1)+'%':'—';}
+function peSwitchTab(name){
+  document.querySelectorAll('.inner-tab').forEach((t,i)=>{const n=['fwdpe','peg','peers'][i];t.classList.toggle('active',n===name);});
+  document.querySelectorAll('.inner-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('pe-tab-'+name).classList.add('active');
+}
+function pegClass(p){return p<1?'peg-good':p<=2?'peg-ok':'peg-high';}
+function pegLabel(p){return p<1?'undervalued':p<=2?'fairly valued':'expensive';}
+function peCalculate(){
+  document.getElementById('pe-error').textContent='';
+  const feps=parseFloat(document.getElementById('pe-feps').value);
+  const mkt=parseFloat(document.getElementById('pe-mkt').value);
+  const g=parseFloat(document.getElementById('pe-growth').value);
+  const bear=parseFloat(document.getElementById('pe-bear').value);
+  const base=parseFloat(document.getElementById('pe-base').value);
+  const bull=parseFloat(document.getElementById('pe-bull').value);
+  if([feps,mkt,g,bear,base,bull].some(isNaN)){document.getElementById('pe-error').textContent='Check inputs.';return;}
+  const pBear=feps*bear,pBase=feps*base,pBull=feps*bull;
+  const currPe=mkt/feps, peg=currPe/g;
+  ['bear','base','bull'].forEach((k,ki)=>{
+    const p=[pBear,pBase,pBull][ki];
+    document.getElementById(`pe-r-${k}`).textContent='$'+p.toFixed(0);
+    document.getElementById(`pe-r-${k}`).style.color=diffColor(p,mkt);
+    document.getElementById(`pe-r-${k}-d`).textContent=diffStr(p,mkt);
+  });
+  document.getElementById('pe-r-currpe').textContent=currPe.toFixed(1)+'x';
+  document.getElementById('pe-r-feps').textContent='$'+feps.toFixed(2);
+  document.getElementById('pe-r-mkt').textContent='$'+mkt.toFixed(0);
+  const pegEl=document.getElementById('pe-r-peg');
+  pegEl.textContent=peg.toFixed(2); pegEl.className='mv '+pegClass(peg);
+  document.getElementById('pe-r-peg-label').textContent=pegLabel(peg)+' (PEG '+peg.toFixed(2)+')';
+  document.getElementById('pe-r-peg1').textContent='$'+(feps*g*1).toFixed(0);
+  document.getElementById('pe-r-peg15').textContent='$'+(feps*g*1.5).toFixed(0);
+  const peR=[bear-2,bear,base,bull,bull+2];
+  const eR=[0.85,0.92,1,1.08,1.16].map(f=>feps*f);
+  const allV=peR.flatMap(p=>eR.map(e=>p*e));
+  const mn=Math.min(...allV),mx=Math.max(...allV);
+  let html='<tr><th>P/E \\ EPS</th>';eR.forEach(e=>html+=`<th>$${e.toFixed(2)}</th>`);html+='</tr>';
+  peR.forEach(p=>{
+    html+=`<tr><td style="font-weight:500;color:var(--text2);">${p.toFixed(1)}x</td>`;
+    eR.forEach(e=>{const v=p*e;const rng=mx-mn||1;const cls=v<mn+rng*0.33?'sc-low':v>mn+rng*0.66?'sc-high':'sc-mid';html+=`<td class="${cls}">$${v.toFixed(0)}${Math.abs(v-mkt)<15?' *':''}</td>`;});html+='</tr>';
+  });
+  document.getElementById('pe-sens-pe').innerHTML=html;
+  const gR=[g-8,g-4,g,g+4,g+8];
+  const peR2=[currPe-4,currPe-2,currPe,currPe+2,currPe+4];
+  let html2='<tr><th>EPS g% \\ Fwd P/E</th>';peR2.forEach(p=>html2+=`<th>${p.toFixed(1)}x</th>`);html2+='</tr>';
+  gR.forEach(gr=>{
+    html2+=`<tr><td style="font-weight:500;color:var(--text2);">${gr.toFixed(0)}%</td>`;
+    peR2.forEach(p=>{const pgv=p/gr;const cls=pgv<1?'sc-high':pgv<=2?'sc-mid':'sc-low';html2+=`<td class="${cls}">${pgv.toFixed(2)}</td>`;});html2+='</tr>';
+  });
+  document.getElementById('pe-sens-peg').innerHTML=html2;
+  const maxFwdPe=Math.max(...PE_PEERS.map(p=>p.fwdPe));
+  const pc=document.getElementById('pe-peer-cards');pc.innerHTML='';
+  PE_PEERS.forEach(p=>{
+    const d=document.createElement('div');d.className='peer-card'+(p.t==='GOOGL'?' highlight':'');
+    d.innerHTML=`<div class="peer-name" style="color:${p.color};">${p.t} <span>${p.n}</span></div><div class="peer-row"><span class="peer-label">Trailing P/E</span><span class="peer-val">${p.pe}x</span></div><div class="peer-row"><span class="peer-label">Forward P/E</span><span class="peer-val">${p.fwdPe}x</span></div><div class="bar-wrap"><div class="bar-fill" style="width:${(p.fwdPe/maxFwdPe*100).toFixed(0)}%;background:${p.color};"></div></div><div class="peer-row" style="margin-top:6px;"><span class="peer-label">EPS growth</span><span class="peer-val">${p.g}%</span></div><div class="peer-row"><span class="peer-label">PEG ratio</span><span class="peer-val">${p.peg} <span class="tag ${pegClass(p.peg)}">${pegLabel(p.peg)}</span></span></div>`;
+    pc.appendChild(d);
+  });
+  document.getElementById('pe-results').style.display='block';
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+dcfBuildHist(); dcfBuildProj(); dcfUpdateWacc();
+evBuildHist(); evBuildPeerInputs();
+ddmBuildHist(); ddmUpdateKe();
+peBuildHist();
+</script>
+</body>
+</html>
