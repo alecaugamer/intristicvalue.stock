@@ -256,6 +256,57 @@
     header { padding: 0 1.25rem; }
     nav button { font-size: 11px; padding: 5px 8px; }
   }
+
+  /* NEW SECTIONS */
+  .content-page { max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+  .content-page h2 { font-size: 18px; font-weight: 400; letter-spacing: -0.01em; margin-bottom: 0.75rem; margin-top: 2rem; }
+  .content-page h2:first-of-type { margin-top: 0; }
+  .content-page h2 strong { color: var(--accent); font-weight: 500; }
+  .content-page h3 { font-size: 14px; font-weight: 500; color: var(--text2); margin-bottom: 0.5rem; margin-top: 1.5rem; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; }
+  .content-page p { color: var(--text2); font-size: 14px; line-height: 1.8; margin-bottom: 0.75rem; }
+  .content-page ul, .content-page ol { padding-left: 1.3rem; margin-bottom: 0.75rem; }
+  .content-page li { color: var(--text2); font-size: 14px; line-height: 1.9; }
+  .content-page li strong { color: var(--text); font-weight: 500; }
+  .formula-box {
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: var(--radius); padding: 1rem 1.25rem; margin: 0.75rem 0 1rem;
+    font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent);
+    line-height: 1.8;
+  }
+  .formula-box .formula-label { font-size: 11px; color: var(--text3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin: 1rem 0; }
+  .info-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; }
+  .info-card .ic-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .info-card .ic-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .info-card .ic-desc { font-size: 12px; color: var(--text3); line-height: 1.6; }
+  .source-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 8px; display: flex; gap: 1rem; align-items: flex-start; }
+  .source-card .sc-type { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); background: var(--bg3); padding: 3px 8px; border-radius: 4px; white-space: nowrap; margin-top: 2px; }
+  .source-card .sc-body .sc-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .source-card .sc-body .sc-desc { font-size: 12px; color: var(--text3); line-height: 1.6; }
+  .source-card .sc-body a { color: var(--accent2); font-size: 12px; }
+  .thesis-step { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .thesis-num { font-family: 'DM Mono', monospace; font-size: 22px; color: var(--border2); font-weight: 300; flex-shrink: 0; min-width: 32px; line-height: 1.3; }
+  .thesis-body .tb-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .thesis-body .tb-desc { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .thesis-example { background: var(--bg3); border-left: 2px solid var(--accent); padding: 1rem 1.25rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1rem 0; }
+  .thesis-example .te-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 6px; }
+  .thesis-example .te-text { font-size: 13px; color: var(--text2); line-height: 1.7; font-style: italic; }
+  .about-hero { display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; }
+  .about-avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(110,231,183,0.1); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 20px; color: var(--accent); flex-shrink: 0; }
+  .about-intro .ai-name { font-size: 20px; font-weight: 400; color: var(--text); margin-bottom: 4px; }
+  .about-intro .ai-role { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+  .timeline { margin: 1rem 0; }
+  .tl-item { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+  .tl-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .tl-body strong { color: var(--text); font-weight: 500; }
+  .warning-note { background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.2); border-radius: var(--radius); padding: 0.85rem 1rem; margin: 1rem 0; font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .warning-note strong { color: var(--accent4); }
+  @media (max-width: 640px) {
+    nav { flex-wrap: wrap; gap: 2px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .content-page { padding: 1.5rem 1.25rem 4rem; }
+  }
 </style>
 </head>
 <body>
@@ -268,6 +319,10 @@
     <button onclick="showSection('evebitda')">ev/ebitda</button>
     <button onclick="showSection('ddm')">ddm</button>
     <button onclick="showSection('pe')">p/e + peg</button>
+    <button onclick="showSection('howto')">how it works</button>
+    <button onclick="showSection('thesis')">inv. thesis</button>
+    <button onclick="showSection('sources')">sources</button>
+    <button onclick="showSection('about')">about</button>
   </nav>
 </header>
 
@@ -659,6 +714,357 @@
       <div id="pe-tab-peers" class="inner-content">
         <div class="peer-grid" id="pe-peer-cards"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="section-howto" class="tab-section">
+  <div class="content-page">
+    <div class="section-header">
+      <div class="section-tag">methodology</div>
+      <div class="section-title">How the <strong>models work</strong></div>
+    </div>
+
+    <h2>01 — <strong>DCF</strong> — Discounted Cash Flow</h2>
+    <p>DCF is an <em>intrinsic valuation</em> method. The core idea: a company is worth the sum of all its future free cash flows, discounted back to today's value. It answers the question — if I own this business forever, what are all future cash flows worth right now?</p>
+    <div class="formula-box">
+      <div class="formula-label">multi-stage DCF formula</div>
+      Intrinsic Value = Σ [ FCF_t / (1 + WACC)^t ] + Terminal Value / (1 + WACC)^n<br/>
+      Terminal Value = FCF_n × (1 + g) / (WACC − g)<br/>
+      Equity Value per Share = (Intrinsic Value − Net Debt) / Shares Outstanding
+    </div>
+    <h3>Key inputs explained</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-tag">FCF</div><div class="ic-title">Free Cash Flow</div><div class="ic-desc">Operating Cash Flow minus CapEx. The actual cash a business generates after maintaining/growing its assets. Not net income — FCF is harder to manipulate.</div></div>
+      <div class="info-card"><div class="ic-tag">WACC</div><div class="ic-title">Weighted Avg. Cost of Capital</div><div class="ic-desc">The discount rate — what return investors require. Calculated via CAPM for equity (Ke = Rf + β × ERP) combined with after-tax cost of debt, weighted by capital structure.</div></div>
+      <div class="info-card"><div class="ic-tag">TGR</div><div class="ic-title">Terminal Growth Rate</div><div class="ic-desc">The assumed perpetual growth rate after the projection period. Usually 2–3.5% — close to long-run GDP growth. Never above WACC, or the math breaks.</div></div>
+      <div class="info-card"><div class="ic-tag">β</div><div class="ic-title">Beta</div><div class="ic-desc">Measures systematic risk vs the market. Beta &gt; 1 = more volatile than S&P 500. Used in CAPM to calculate cost of equity. JNJ has beta ~0.35, GOOGL ~1.11.</div></div>
+    </div>
+    <h3>When to use DCF</h3>
+    <ul>
+      <li>Companies with stable, predictable free cash flows (mature tech, consumer staples)</li>
+      <li>When you want an absolute intrinsic value, not just relative to peers</li>
+      <li>Long-term fundamental investors (Warren Buffett style)</li>
+    </ul>
+    <h3>DCF limitations</h3>
+    <ul>
+      <li><strong>Garbage in, garbage out</strong> — small changes in WACC or TGR create huge swings in output</li>
+      <li>Terminal value often represents 60–80% of total value — highly sensitive to assumptions</li>
+      <li>Useless for early-stage companies with no FCF history</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>02 — <strong>EV/EBITDA</strong> — Enterprise Value Multiple</h2>
+    <p>A <em>relative valuation</em> method. Instead of projecting future cash flows, you ask: how much are comparable companies paying per dollar of EBITDA? Then apply that multiple to your target company.</p>
+    <div class="formula-box">
+      <div class="formula-label">EV/EBITDA formula</div>
+      Enterprise Value (EV) = Market Cap + Net Debt (Total Debt − Cash)<br/>
+      EV/EBITDA Multiple = EV / EBITDA<br/>
+      Implied Share Price = (EBITDA × Fair Multiple − Net Debt) / Shares Outstanding
+    </div>
+    <h3>Why EV/EBITDA over P/E?</h3>
+    <p>EV captures the full picture — equity + debt. EBITDA removes distortions from depreciation policies, interest rates, and tax rates. This makes it capital-structure-neutral — ideal for comparing companies with different leverage levels.</p>
+    <h3>When to use EV/EBITDA</h3>
+    <ul>
+      <li>Comparing companies within the same sector (same industry = similar multiples make sense)</li>
+      <li>M&amp;A analysis — acquirers look at EV because they take on debt too</li>
+      <li>Capital-intensive businesses where D&amp;A is large (telecom, utilities, industrials)</li>
+    </ul>
+    <h3>Limitations</h3>
+    <ul>
+      <li>EBITDA ignores CapEx — misleading for very capital-intensive companies</li>
+      <li>Multiples are market-dependent: they compress during downturns and expand in bull markets</li>
+      <li>Comparing across sectors is meaningless — always compare within the same industry</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>03 — <strong>DDM</strong> — Dividend Discount Model</h2>
+    <p>DDM values a stock as the present value of all future dividends. The two-stage version separates a high-growth phase from a stable terminal phase using Gordon Growth Model.</p>
+    <div class="formula-box">
+      <div class="formula-label">two-stage DDM</div>
+      Phase 1 PV = Σ [ D_t / (1 + Ke)^t ] for t = 1 to n<br/>
+      Terminal Value = D_(n+1) / (Ke − g_terminal)<br/>
+      PV of TV = Terminal Value / (1 + Ke)^n<br/>
+      Intrinsic Value = Phase 1 PV + PV of Terminal Value
+    </div>
+    <h3>When to use DDM</h3>
+    <ul>
+      <li>Mature dividend-paying companies with stable payout history (utilities, REITs, Dividend Kings like JNJ)</li>
+      <li>Companies where dividends represent true shareholder returns (not just buybacks)</li>
+      <li>Income-oriented investment analysis</li>
+    </ul>
+    <h3>DDM is highly sensitive to Ke</h3>
+    <p>The required return Ke (calculated via CAPM) has an outsized impact on the result. A 1% change in Ke can move the implied value by 20–30%. This is why the sensitivity table is so important — always stress-test your Ke assumption.</p>
+    <h3>Limitations</h3>
+    <ul>
+      <li>Useless for non-dividend-paying companies (GOOGL paid no dividend until 2024)</li>
+      <li>Assumes dividends grow at a constant rate — may not hold in practice</li>
+      <li>Does not capture value from retained earnings reinvested into the business</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>04 — <strong>Forward P/E + PEG</strong> — Earnings Multiple</h2>
+    <p>Forward P/E is the most widely quoted valuation metric on Wall Street. It answers: how much are investors paying per dollar of projected earnings? PEG ratio adds a growth dimension — adjusting the P/E for expected EPS growth rate.</p>
+    <div class="formula-box">
+      <div class="formula-label">P/E and PEG formulas</div>
+      Trailing P/E = Current Price / TTM EPS<br/>
+      Forward P/E = Current Price / Next 12 Month EPS (analyst consensus)<br/>
+      Implied Price = Fair P/E × Forward EPS<br/>
+      PEG Ratio = Forward P/E / Expected EPS Growth Rate (%)<br/>
+      PEG &lt; 1 → potentially undervalued | PEG &gt; 2 → potentially expensive
+    </div>
+    <h3>Why Forward P/E beats Trailing P/E</h3>
+    <p>Markets are forward-looking. Trailing P/E uses past earnings — but the stock price reflects what investors expect in the future. Forward P/E uses analyst consensus estimates for the next 12 months, which better captures expected profitability.</p>
+    <h3>PEG ratio — the growth adjustment</h3>
+    <p>Two companies can have the same P/E but vastly different growth rates. PEG normalizes for this. A company with P/E 30x growing at 30% per year (PEG = 1.0) may be cheaper than a company with P/E 15x growing at 5% per year (PEG = 3.0).</p>
+    <h3>Limitations</h3>
+    <ul>
+      <li>EPS can be manipulated through buybacks, accounting choices, or one-off items</li>
+      <li>Forward EPS is based on analyst estimates — which are frequently wrong</li>
+      <li>Not suitable for loss-making companies, financials, or cyclicals with volatile earnings</li>
+    </ul>
+  </div>
+</div>
+
+<!-- INVESTMENT THESIS -->
+<div id="section-thesis" class="tab-section">
+  <div class="content-page">
+    <div class="section-header">
+      <div class="section-tag">framework</div>
+      <div class="section-title">How to write a <strong>quality investment thesis</strong></div>
+    </div>
+
+    <p>An investment thesis is a structured argument for why a specific stock is worth buying (or selling) at the current price. A good thesis is not "this company is great" — it's a specific, falsifiable claim backed by data. Sell-side analysts write these daily. Here is the framework professionals use.</p>
+
+    <div class="warning-note"><strong>Remember:</strong> A thesis is only as good as its ability to be proven wrong. Always define what would make you change your mind.</div>
+
+    <h2>The 6-part thesis <strong>structure</strong></h2>
+
+    <div class="thesis-step">
+      <div class="thesis-num">01</div>
+      <div class="thesis-body">
+        <div class="tb-title">Business overview — what does the company actually do?</div>
+        <div class="tb-desc">Describe the business model in 2–3 sentences. Revenue streams, customers, competitive moat. Avoid copy-pasting the 10-K description — explain it in your own words. If you can't, you don't understand the business well enough yet.</div>
+      </div>
+    </div>
+
+    <div class="thesis-step">
+      <div class="thesis-num">02</div>
+      <div class="thesis-body">
+        <div class="tb-title">The core thesis — your main bullish (or bearish) argument</div>
+        <div class="tb-desc">One clear sentence: why is this stock mispriced? The market is wrong about X because of Y. Be specific. "GOOGL is undervalued because the market is not pricing in Google Cloud's path to 30%+ operating margins by 2027, which would add ~$40/share to intrinsic value."</div>
+      </div>
+    </div>
+
+    <div class="thesis-step">
+      <div class="thesis-num">03</div>
+      <div class="thesis-body">
+        <div class="tb-title">Catalysts — what will close the gap between price and value?</div>
+        <div class="tb-desc">Identify 2–3 specific events that could unlock value: earnings beats, margin expansion, new product launches, industry tailwinds, regulatory changes, buybacks. Without catalysts, even a correctly valued stock can stay cheap for years.</div>
+      </div>
+    </div>
+
+    <div class="thesis-step">
+      <div class="thesis-num">04</div>
+      <div class="thesis-body">
+        <div class="tb-title">Valuation — what is the stock worth?</div>
+        <div class="tb-desc">Use at least 2 methods (e.g. DCF + EV/EBITDA) and triangulate. Show a bear/base/bull case. State your price target and the time horizon. Never give just one number without context — always show the range of outcomes and the assumptions behind them.</div>
+      </div>
+    </div>
+
+    <div class="thesis-step">
+      <div class="thesis-num">05</div>
+      <div class="thesis-body">
+        <div class="tb-title">Risks — what could go wrong?</div>
+        <div class="tb-desc">This is where most students fail. Listing generic risks ("competition", "macro environment") is lazy. Think through specific, quantifiable risks: what happens to your DCF if WACC increases by 2%? What if Google loses its default search deal with Apple ($15–20B/year revenue)? Show you've stress-tested the thesis.</div>
+      </div>
+    </div>
+
+    <div class="thesis-step">
+      <div class="thesis-num">06</div>
+      <div class="thesis-body">
+        <div class="tb-title">Variant view — why do you disagree with consensus?</div>
+        <div class="tb-desc">What does the market think, and why are you right when they're wrong? This is the most important part for sell-side roles. If everyone already knows the thesis, it's already priced in. Your edge is the insight the consensus is missing.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Example thesis <strong>structure — GOOGL</strong></h2>
+    <p style="color:var(--text3);font-size:12px;font-family:'DM Mono',monospace;margin-bottom:1rem;">illustration only — not investment advice</p>
+
+    <div class="thesis-example">
+      <div class="te-label">01 — business overview</div>
+      <div class="te-text">Alphabet is the parent company of Google — the world's dominant search engine (90%+ market share), YouTube (2nd largest search engine globally), and Google Cloud (3rd largest cloud provider). ~77% of revenue comes from advertising, with Cloud growing at 30%+ YoY as the fastest-growing segment.</div>
+    </div>
+
+    <div class="thesis-example">
+      <div class="te-label">02 — core thesis</div>
+      <div class="te-text">At a PEG ratio of ~0.84, GOOGL is priced as a mature, slow-growth company — yet EPS grew 34% YoY in 2025. The market is underpricing Google Cloud's margin expansion trajectory and the monetization optionality of Gemini AI embedded into Search, which has 1.5B monthly users on AI Overviews alone.</div>
+    </div>
+
+    <div class="thesis-example">
+      <div class="te-label">03 — catalysts</div>
+      <div class="te-text">(1) Google Cloud crossing 15%+ operating margin — expected 2026. (2) AI Overviews driving Search revenue uplift as advertisers follow attention. (3) Continued buybacks reducing share count ~2% annually, boosting EPS mechanically.</div>
+    </div>
+
+    <div class="thesis-example">
+      <div class="te-label">04 — valuation</div>
+      <div class="te-text">DCF base case (WACC 9%, TGR 3%, FCF growing ~15% for 6 years) implies $280–340/share. EV/EBITDA at historical median 18.6x on $155B forward EBITDA implies ~$260. Forward P/E at 25x on $13.50 EPS = $337. Weighted average target: ~$300, roughly in-line with current price — suggesting fair value with upside if Cloud margins expand faster than modeled.</div>
+    </div>
+
+    <div class="thesis-example">
+      <div class="te-label">05 — key risks</div>
+      <div class="te-text">(1) DOJ antitrust ruling forcing divestiture of Chrome or Android — could eliminate $15–20B in default search revenue. (2) AI-native search (Perplexity, ChatGPT) eroding Search market share — every 1pp of market share lost ≈ ~$3B revenue. (3) Capex guidance of $175–185B in 2026 suppressing FCF if Cloud adoption disappoints.</div>
+    </div>
+
+    <div class="thesis-example">
+      <div class="te-label">06 — variant view</div>
+      <div class="te-text">Consensus underestimates Google's AI monetization speed. Unlike OpenAI (which needs to build distribution), Google has the world's largest search distribution already. Gemini is not a startup competing for users — it's an upgrade to a product 5 billion people already use. The market prices Alphabet like an ad company at risk; the reality is it's an AI infrastructure company with an advertising moat subsidising R&amp;D at scale.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Common <strong>mistakes</strong> to avoid</h2>
+    <ul>
+      <li><strong>Anchoring to a price target</strong> — build the model first, derive the target from that, not the other way around</li>
+      <li><strong>Ignoring the balance sheet</strong> — a profitable company with unsustainable debt is a trap</li>
+      <li><strong>One-method valuation</strong> — always triangulate at least 2 methods; if they diverge significantly, understand why</li>
+      <li><strong>No time horizon</strong> — "this stock will go up" is not a thesis. "I expect X to reach Y within 18 months driven by Z" is</li>
+      <li><strong>Not reading the 10-K</strong> — the footnotes contain what management doesn't want you to notice</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div id="section-sources" class="tab-section">
+  <div class="content-page">
+    <div class="section-header">
+      <div class="section-tag">references</div>
+      <div class="section-title">Data <strong>sources & learning</strong></div>
+    </div>
+
+    <h2>Data sources used in this <strong>toolkit</strong></h2>
+
+    <div class="source-card">
+      <div class="sc-type">primary</div>
+      <div class="sc-body"><div class="sc-title">SEC EDGAR — Alphabet Inc. 10-K & 8-K filings</div><div class="sc-desc">All historical FCF, EPS, and dividend data sourced directly from public SEC filings. The most reliable source — straight from the company. <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=GOOGL" target="_blank">sec.gov</a></div></div>
+    </div>
+    <div class="source-card">
+      <div class="sc-type">primary</div>
+      <div class="sc-body"><div class="sc-title">Johnson & Johnson 8-K filings — dividend announcements</div><div class="sc-desc">Annual dividend per share history sourced from JNJ investor relations press releases and SEC 8-K filings. <a href="https://investor.jnj.com" target="_blank">investor.jnj.com</a></div></div>
+    </div>
+    <div class="source-card">
+      <div class="sc-type">aggregator</div>
+      <div class="sc-body"><div class="sc-title">StockAnalysis.com</div><div class="sc-desc">Standardised financial statements, cash flow data, and historical multiples. Used for EV/EBITDA peer data and share count verification. <a href="https://stockanalysis.com" target="_blank">stockanalysis.com</a></div></div>
+    </div>
+    <div class="source-card">
+      <div class="sc-type">aggregator</div>
+      <div class="sc-body"><div class="sc-title">MacroTrends</div><div class="sc-desc">Long-run historical EPS, EBITDA, and FCF series for backtesting and CAGR calculation. <a href="https://www.macrotrends.net" target="_blank">macrotrends.net</a></div></div>
+    </div>
+    <div class="source-card">
+      <div class="sc-type">methodology</div>
+      <div class="sc-body"><div class="sc-title">Damodaran Online — NYU Stern (Aswath Damodaran)</div><div class="sc-desc">Equity risk premium data, beta by sector, and WACC benchmarks. Professor Damodaran publishes free annual datasets used by professionals worldwide. <a href="https://pages.stern.nyu.edu/~adamodar/" target="_blank">pages.stern.nyu.edu/~adamodar</a></div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Recommended <strong>learning resources</strong></h2>
+
+    <h3>Books</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-tag">book</div><div class="ic-title">One Up on Wall Street — Peter Lynch</div><div class="ic-desc">How to find investment ideas in everyday life. Accessible, practical framework for stock picking. Essential starting point for any retail investor.</div></div>
+      <div class="info-card"><div class="ic-tag">book</div><div class="ic-title">The Intelligent Investor — Benjamin Graham</div><div class="ic-desc">The bible of value investing. Margin of safety concept, Mr. Market allegory. Chapter 8 and 20 are required reading.</div></div>
+      <div class="info-card"><div class="ic-tag">book</div><div class="ic-title">Valuation — McKinsey & Company</div><div class="ic-desc">Professional-grade DCF and valuation methodology. Used by investment bankers and equity research analysts globally. Heavy but comprehensive.</div></div>
+      <div class="info-card"><div class="ic-tag">book</div><div class="ic-title">Investment Valuation — Aswath Damodaran</div><div class="ic-desc">The academic standard for valuation theory. Free PDF available on Damodaran's website. Covers every valuation method in depth.</div></div>
+    </div>
+
+    <h3>Online courses & resources</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-tag">free course</div><div class="ic-title">Damodaran Online — Valuation MBA</div><div class="ic-desc">Full NYU MBA valuation course available free on YouTube. 30+ hours. The best free finance education available anywhere. damodaran.com</div></div>
+      <div class="info-card"><div class="ic-tag">free course</div><div class="ic-title">Financial Markets — Yale / Coursera (Shiller)</div><div class="ic-desc">Robert Shiller's Yale course on financial markets. Broad foundation covering markets, risk, and behavioral finance. Available free to audit.</div></div>
+      <div class="info-card"><div class="ic-tag">paid course</div><div class="ic-title">Financial Modeling & Valuation — Udemy</div><div class="ic-desc">Practical Excel-based DCF and LBO modeling. Good for building the technical skills recruiters test in interviews. ~€15 on sale.</div></div>
+      <div class="info-card"><div class="ic-tag">data</div><div class="ic-title">Bloomberg Market Concepts (BMC)</div><div class="ic-desc">Bloomberg's self-paced certification covering economics, currencies, fixed income, and equities. Recognised on CVs. Check university access.</div></div>
+    </div>
+
+    <h3>Primary data sources for your own research</h3>
+    <ul>
+      <li><strong>SEC EDGAR</strong> — sec.gov — all public company filings (10-K, 10-Q, 8-K, proxy statements)</li>
+      <li><strong>Company investor relations pages</strong> — always the primary source, never the aggregator</li>
+      <li><strong>Eurostat</strong> — eurostat.ec.europa.eu — macroeconomic data for European analysis</li>
+      <li><strong>FRED (Federal Reserve)</strong> — fred.stlouisfed.org — US macro data, interest rates, GDP</li>
+      <li><strong>Damodaran datasets</strong> — annual ERP, beta by sector, country risk premiums — free download</li>
+    </ul>
+
+    <h3>Long-term credentials worth pursuing</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-tag">credential</div><div class="ic-title">CFA (Chartered Financial Analyst)</div><div class="ic-desc">The global gold standard for investment analysis. 3 levels. Requires ~300h study per level. Level 1 as early as final year of university. Most relevant for buy-side and equity research roles.</div></div>
+      <div class="info-card"><div class="ic-tag">credential</div><div class="ic-title">CFA Institute Research Challenge</div><div class="ic-desc">Annual student competition where teams write and present professional equity research reports. Exceptional CV differentiator. Check if EUBA participates.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="section-about" class="tab-section">
+  <div class="content-page">
+    <div class="section-header">
+      <div class="section-tag">background</div>
+      <div class="section-title">Why I <strong>built this</strong></div>
+    </div>
+
+    <div class="about-hero">
+      <div class="about-avatar">J</div>
+      <div class="about-intro">
+        <div class="ai-name">Jakub</div>
+        <div class="ai-role">Finance, Banking & Investment — EUBA Bratislava, Year 1</div>
+      </div>
+    </div>
+
+    <p>I'm a first-year Finance, Banking & Investment student at Ekonomická univerzita v Bratislave (EUBA), based in Trenčín, Slovakia. My long-term goal is to work in equity research — starting sell-side, with the aim of transitioning to a buy-side analyst role over time. Target cities include Prague, Vienna, and London.</p>
+
+    <p>Outside of university, I actively manage my own investment portfolio with a focus on technology, fintech, and AI companies. Over roughly 2.5 years I have achieved strong returns through stock picking and fundamental analysis — applying the same methodologies that this toolkit is built around.</p>
+
+    <div class="divider"></div>
+
+    <h2>Why I built <strong>this project</strong></h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body"><strong>The problem with finance education</strong> — University teaches you the formulas. It rarely gives you the chance to apply them to real companies, with real data, in a format that forces you to defend your assumptions. I wanted to bridge that gap.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body"><strong>Learning by building</strong> — Implementing these models from scratch (not using Excel templates or financial data terminals) forced me to understand every component deeply. When you code a DCF, you can't hide behind a spreadsheet that "just works." You have to understand why the terminal value formula is FCF × (1+g) / (WACC−g) and what breaks if WACC &lt; g.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body"><strong>CV differentiation</strong> — Most finance students submit the same CV with the same coursework. A recruiter at a sell-side firm in Prague or Vienna sees hundreds of applications from students who took the same courses. A working valuation tool with real data — that you can demo in an interview — is a conversation starter, not just a line item.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body"><strong>Practical finance skills</strong> — Python, financial modeling, and accounting are the three skills I'm prioritising for the next 2 years alongside my degree. This project sits at the intersection of all three — it's not just finance theory, it's applied problem-solving.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>What I'm <strong>working on next</strong></h2>
+    <ul>
+      <li>Building out full investment theses for companies in my portfolio — published on LinkedIn</li>
+      <li>Adding a P/B and EV/Sales model to this toolkit</li>
+      <li>Learning Python for financial data analysis (pandas, yfinance, matplotlib)</li>
+      <li>Exploring CFA Level 1 preparation for after graduation</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <div class="warning-note">
+      <strong>A note on this toolkit:</strong> Everything here was built as a learning exercise and portfolio demonstration. The models, data, and outputs are for educational purposes only and do not constitute financial advice. I am a student, not a licensed financial advisor. Before making any investment decision, consult a qualified professional and do your own research.
     </div>
   </div>
 </div>
